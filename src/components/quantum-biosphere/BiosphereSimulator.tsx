@@ -1,17 +1,22 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import * as THREE from "three";
 
 const Planet = () => {
   console.log("Rendering Planet component");
+  
+  // Create a more detailed planet with proper material properties
   return (
     <mesh>
-      <sphereGeometry args={[1, 32, 32]} />
+      <sphereGeometry args={[1, 64, 64]} />
       <meshStandardMaterial 
-        color="#4444aa"
+        color={new THREE.Color("#4444aa")}
         roughness={0.7}
         metalness={0.3}
+        transparent={false}
+        opacity={1}
       />
     </mesh>
   );
@@ -19,22 +24,48 @@ const Planet = () => {
 
 const Scene = () => {
   console.log("Rendering Scene component");
+
+  useEffect(() => {
+    console.log("Scene component mounted");
+    return () => {
+      console.log("Scene component unmounted");
+    };
+  }, []);
+
   return (
     <>
       <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} intensity={1} />
+      <pointLight 
+        position={[10, 10, 10]} 
+        intensity={1}
+        castShadow
+      />
       <Planet />
-      <Stars radius={100} depth={50} count={5000} factor={4} />
+      <Stars 
+        radius={100} 
+        depth={50} 
+        count={5000} 
+        factor={4} 
+        fade
+        saturation={0}
+      />
       <OrbitControls 
         enableZoom={true}
         enablePan={true}
         enableRotate={true}
         minDistance={2}
         maxDistance={7}
+        makeDefault
       />
     </>
   );
 };
+
+const LoadingFallback = () => (
+  <div className="w-full h-full flex items-center justify-center bg-background">
+    <p className="text-foreground">Loading 3D scene...</p>
+  </div>
+);
 
 const ErrorFallback = ({ error }: { error: Error }) => {
   console.error("BiosphereSimulator error:", error);
@@ -48,6 +79,14 @@ const ErrorFallback = ({ error }: { error: Error }) => {
 const BiosphereSimulator = () => {
   console.log("Rendering BiosphereSimulator");
   
+  useEffect(() => {
+    console.log("BiosphereSimulator mounted");
+    return () => {
+      console.log("BiosphereSimulator unmounted - cleaning up");
+      // Clean up Three.js resources if needed
+    };
+  }, []);
+
   return (
     <div className="w-full h-[400px] rounded-lg overflow-hidden">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -59,8 +98,13 @@ const BiosphereSimulator = () => {
             far: 1000
           }}
           style={{ background: 'rgb(2,0,36)' }}
+          gl={{ 
+            antialias: true,
+            alpha: false,
+            powerPreference: "high-performance"
+          }}
         >
-          <Suspense fallback={null}>
+          <Suspense fallback={<LoadingFallback />}>
             <Scene />
           </Suspense>
         </Canvas>
