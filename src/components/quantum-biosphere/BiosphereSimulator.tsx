@@ -1,22 +1,24 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import * as THREE from "three";
 
 const Planet = () => {
-  console.log("Rendering Planet component");
+  const meshRef = useRef<THREE.Mesh>(null);
   
-  // Create a more detailed planet with proper material properties
+  useEffect(() => {
+    console.log("Planet component mounted");
+    return () => console.log("Planet component unmounted");
+  }, []);
+
   return (
-    <mesh>
+    <mesh ref={meshRef}>
       <sphereGeometry args={[1, 64, 64]} />
       <meshStandardMaterial 
         color={new THREE.Color("#4444aa")}
         roughness={0.7}
         metalness={0.3}
-        transparent={false}
-        opacity={1}
       />
     </mesh>
   );
@@ -38,7 +40,6 @@ const Scene = () => {
       <pointLight 
         position={[10, 10, 10]} 
         intensity={1}
-        castShadow
       />
       <Planet />
       <Stars 
@@ -47,7 +48,6 @@ const Scene = () => {
         count={5000} 
         factor={4} 
         fade
-        saturation={0}
       />
       <OrbitControls 
         enableZoom={true}
@@ -55,7 +55,6 @@ const Scene = () => {
         enableRotate={true}
         minDistance={2}
         maxDistance={7}
-        makeDefault
       />
     </>
   );
@@ -83,7 +82,6 @@ const BiosphereSimulator = () => {
     console.log("BiosphereSimulator mounted");
     return () => {
       console.log("BiosphereSimulator unmounted - cleaning up");
-      // Clean up Three.js resources if needed
     };
   }, []);
 
@@ -100,8 +98,7 @@ const BiosphereSimulator = () => {
           style={{ background: 'rgb(2,0,36)' }}
           gl={{ 
             antialias: true,
-            alpha: false,
-            powerPreference: "high-performance"
+            alpha: false
           }}
         >
           <Suspense fallback={<LoadingFallback />}>
