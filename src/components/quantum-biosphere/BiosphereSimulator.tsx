@@ -13,14 +13,20 @@ const Planet = () => {
   }, []);
 
   return (
-    <mesh ref={meshRef} position={[0, 0, 0]}>
+    <mesh 
+      ref={meshRef} 
+      position={[0, 0, 0]}
+      castShadow
+      receiveShadow
+    >
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial 
-        color="#4444aa"
+        color={new THREE.Color("#4444aa")}
         roughness={0.7}
         metalness={0.3}
         transparent={false}
         opacity={1}
+        side={THREE.FrontSide}
       />
     </mesh>
   );
@@ -91,6 +97,7 @@ const BiosphereSimulator = () => {
     <div className="w-full h-[400px] rounded-lg overflow-hidden">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <Canvas
+          shadows
           camera={{ 
             position: [0, 0, 4],
             fov: 45,
@@ -103,10 +110,13 @@ const BiosphereSimulator = () => {
             alpha: false,
             powerPreference: "high-performance",
             precision: "highp",
-            stencil: false
+            stencil: false,
+            depth: true,
+            logarithmicDepthBuffer: true
           }}
           dpr={[1, 2]}
           legacy={false}
+          flat
         >
           <Suspense fallback={<LoadingFallback />}>
             <Scene />
