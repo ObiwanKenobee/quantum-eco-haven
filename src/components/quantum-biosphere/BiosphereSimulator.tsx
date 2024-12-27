@@ -13,13 +13,9 @@ const Planet = () => {
   }, []);
 
   return (
-    <mesh ref={meshRef} position={[0, 0, 0]}>
+    <mesh ref={meshRef}>
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial 
-        color="#4444aa"
-        roughness={0.7}
-        metalness={0.3}
-      />
+      <meshBasicMaterial color="#4444aa" />
     </mesh>
   );
 };
@@ -95,8 +91,7 @@ const BiosphereSimulator = () => {
           style={{ background: 'rgb(2,0,36)' }}
           gl={{ 
             antialias: true,
-            alpha: false,
-            powerPreference: "default"
+            alpha: false
           }}
         >
           <Suspense fallback={<LoadingFallback />}>
