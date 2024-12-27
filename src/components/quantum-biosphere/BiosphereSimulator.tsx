@@ -9,17 +9,18 @@ const Planet = () => {
   
   useEffect(() => {
     console.log("Planet component mounted");
+    if (meshRef.current) {
+      meshRef.current.geometry.computeBoundingSphere();
+    }
     return () => console.log("Planet component unmounted");
   }, []);
 
   return (
     <mesh ref={meshRef}>
       <sphereGeometry args={[1, 64, 64]} />
-      <meshStandardMaterial 
-        color={new THREE.Color("#4444aa")}
-        roughness={0.7}
-        metalness={0.3}
-      />
+      <meshStandardMaterial>
+        <color attach="value" args={["#4444aa"]} />
+      </meshStandardMaterial>
     </mesh>
   );
 };
@@ -37,10 +38,7 @@ const Scene = () => {
   return (
     <>
       <ambientLight intensity={0.5} />
-      <pointLight 
-        position={[10, 10, 10]} 
-        intensity={1}
-      />
+      <pointLight position={[10, 10, 10]} />
       <Planet />
       <Stars 
         radius={100} 
