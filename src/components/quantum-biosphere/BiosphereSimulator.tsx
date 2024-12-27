@@ -10,7 +10,7 @@ const Planet = () => {
   return (
     <mesh ref={meshRef}>
       <sphereGeometry args={[1, 32, 32]} />
-      <meshPhongMaterial color={0x00ff00} />
+      <meshStandardMaterial color="#00ff00" roughness={0.5} metalness={0.5} />
     </mesh>
   );
 };
