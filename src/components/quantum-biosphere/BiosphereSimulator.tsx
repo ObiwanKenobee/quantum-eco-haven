@@ -49,7 +49,7 @@ const BiosphereSimulator = () => {
   console.log("Rendering BiosphereSimulator");
   
   return (
-    <div className="w-full h-[500px] rounded-lg overflow-hidden border border-border">
+    <div className="w-full h-[400px] rounded-lg overflow-hidden">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <Canvas
           camera={{ 
