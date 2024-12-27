@@ -8,17 +8,19 @@ const Planet = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   
   useEffect(() => {
-    console.log("Planet component mounted");
-    return () => console.log("Planet component unmounted");
+    if (!meshRef.current) return;
+    console.log("Planet mesh initialized:", meshRef.current);
   }, []);
 
   return (
-    <mesh ref={meshRef}>
+    <mesh ref={meshRef} position={[0, 0, 0]}>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial 
         color="#4444aa"
         roughness={0.7}
         metalness={0.3}
+        transparent={false}
+        opacity={1}
       />
     </mesh>
   );
@@ -46,6 +48,7 @@ const Scene = () => {
         factor={4} 
         saturation={0}
         fade
+        speed={1}
       />
       <OrbitControls 
         enableZoom={true}
@@ -53,6 +56,7 @@ const Scene = () => {
         enableRotate={true}
         minDistance={2}
         maxDistance={7}
+        makeDefault
       />
     </>
   );
@@ -91,13 +95,18 @@ const BiosphereSimulator = () => {
             position: [0, 0, 4],
             fov: 45,
             near: 0.1,
-            far: 1000
+            far: 1000,
+            up: [0, 1, 0]
           }}
           gl={{ 
             antialias: true,
             alpha: false,
-            powerPreference: "high-performance"
+            powerPreference: "high-performance",
+            precision: "highp",
+            stencil: false
           }}
+          dpr={[1, 2]}
+          legacy={false}
         >
           <Suspense fallback={<LoadingFallback />}>
             <Scene />
