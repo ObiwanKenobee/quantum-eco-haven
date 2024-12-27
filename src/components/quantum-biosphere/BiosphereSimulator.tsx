@@ -5,7 +5,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 const Planet = () => {
   return (
-    <mesh>
+    <mesh position={[0, 0, 0]}>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial 
         color="#4444aa"
@@ -27,6 +27,8 @@ const Scene = () => {
         depth={50} 
         count={5000} 
         factor={4} 
+        saturation={0}
+        fade={true}
       />
       <OrbitControls 
         enableZoom={true}
