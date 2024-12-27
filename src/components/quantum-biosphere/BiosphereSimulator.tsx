@@ -1,49 +1,24 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import * as THREE from "three";
 
 const Planet = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  
-  useEffect(() => {
-    if (!meshRef.current) return;
-    console.log("Planet mesh initialized:", meshRef.current);
-  }, []);
-
   return (
-    <mesh 
-      ref={meshRef} 
-      position={[0, 0, 0]}
-      castShadow
-      receiveShadow
-    >
+    <mesh position={[0, 0, 0]}>
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial 
-        color={0x4444aa}
-        roughness={0.7}
-        metalness={0.3}
-      />
+      <meshStandardMaterial color={0x4444aa} />
     </mesh>
   );
 };
 
 const Scene = () => {
-  console.log("Rendering Scene component");
-
   return (
     <>
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} intensity={1.5} />
       <Planet />
-      <Stars 
-        radius={100} 
-        depth={50} 
-        count={5000} 
-        factor={4} 
-        saturation={0}
-      />
+      <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} />
       <OrbitControls 
         enableZoom={true}
         enablePan={true}
@@ -71,8 +46,6 @@ const ErrorFallback = ({ error }: { error: Error }) => {
 };
 
 const BiosphereSimulator = () => {
-  console.log("Rendering BiosphereSimulator");
-
   return (
     <div className="w-full h-[400px] rounded-lg overflow-hidden">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
