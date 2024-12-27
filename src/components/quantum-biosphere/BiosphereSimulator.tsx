@@ -1,15 +1,12 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { Suspense, useRef } from "react";
-import { Mesh } from "three";
+import { Suspense } from "react";
 
 const Planet = () => {
-  const meshRef = useRef<Mesh>(null);
-
   return (
-    <mesh ref={meshRef}>
+    <mesh position={[0, 0, 0]}>
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color="green" />
+      <meshBasicMaterial color="#00ff00" />
     </mesh>
   );
 };
@@ -26,10 +23,10 @@ const BiosphereSimulator = () => {
         }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
+          <ambientLight />
+          <pointLight position={[10, 10, 10]} />
           <Planet />
-          <OrbitControls />
+          <OrbitControls makeDefault enableZoom={true} enablePan={true} enableRotate={true} />
         </Suspense>
       </Canvas>
     </div>
