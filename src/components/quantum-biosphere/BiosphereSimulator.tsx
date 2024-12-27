@@ -2,12 +2,17 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import * as THREE from "three";
 
 const Planet = () => {
   return (
     <mesh>
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color="#4444aa" />
+      <meshStandardMaterial 
+        color={new THREE.Color("#4444aa").getHex()} 
+        roughness={0.7}
+        metalness={0.3}
+      />
     </mesh>
   );
 };
@@ -15,11 +20,22 @@ const Planet = () => {
 const Scene = () => {
   return (
     <>
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} intensity={1.0} />
       <Planet />
-      <Stars />
-      <OrbitControls />
+      <Stars 
+        radius={100} 
+        depth={50} 
+        count={5000} 
+        factor={4} 
+        fade 
+        speed={1}
+      />
+      <OrbitControls 
+        enableZoom={true}
+        minDistance={2}
+        maxDistance={10}
+      />
     </>
   );
 };
@@ -43,7 +59,19 @@ const BiosphereSimulator = () => {
   return (
     <div className="w-full h-[400px] rounded-lg overflow-hidden">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <Canvas>
+        <Canvas
+          camera={{
+            position: [0, 0, 5],
+            fov: 75,
+            near: 0.1,
+            far: 1000
+          }}
+          gl={{
+            antialias: true,
+            toneMapping: THREE.ACESFilmicToneMapping,
+            outputColorSpace: THREE.SRGBColorSpace
+          }}
+        >
           <Suspense fallback={<LoadingFallback />}>
             <Scene />
           </Suspense>
