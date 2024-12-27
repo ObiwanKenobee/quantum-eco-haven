@@ -1,52 +1,43 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import { Suspense, useRef } from "react";
-import { Mesh } from "three";
-import { ErrorBoundary } from "react-error-boundary";
+import { OrbitControls, Stars } from "@react-three/drei";
+import { Suspense } from "react";
 
 const Planet = () => {
-  const meshRef = useRef<Mesh>(null);
-
   return (
-    <mesh ref={meshRef}>
+    <mesh>
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color="#00ff00" roughness={0.5} metalness={0.5} />
+      <meshStandardMaterial 
+        color="#4444aa"
+        roughness={0.7}
+        metalness={0.3}
+      />
     </mesh>
   );
 };
 
-const Scene = () => {
-  return (
-    <Suspense fallback={null}>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} intensity={1.0} />
-      <Planet />
-      <OrbitControls enableDamping dampingFactor={0.05} />
-    </Suspense>
-  );
-};
-
-const ErrorFallback = () => (
-  <div className="text-red-500 p-4">
-    Error loading 3D scene. Please refresh the page.
-  </div>
-);
-
 const BiosphereSimulator = () => {
+  console.log("Rendering BiosphereSimulator");
+  
   return (
-    <div className="h-[600px] w-full rounded-lg overflow-hidden border border-border">
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <Canvas
-          camera={{
-            position: [0, 0, 5],
-            fov: 75,
-            near: 0.1,
-            far: 1000
-          }}
-        >
-          <Scene />
-        </Canvas>
-      </ErrorBoundary>
+    <div className="w-full h-[500px] rounded-lg overflow-hidden border border-border">
+      <Canvas
+        camera={{ position: [0, 0, 4], fov: 45 }}
+        style={{ background: 'rgb(2,0,36)' }}
+      >
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} intensity={1} />
+          <Planet />
+          <Stars radius={100} depth={50} count={5000} factor={4} />
+          <OrbitControls 
+            enableZoom={true}
+            enablePan={true}
+            enableRotate={true}
+            minDistance={2}
+            maxDistance={7}
+          />
+        </Suspense>
+      </Canvas>
     </div>
   );
 };
