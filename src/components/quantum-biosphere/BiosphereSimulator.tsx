@@ -28,7 +28,6 @@ const Scene = () => {
         count={5000} 
         factor={4} 
         saturation={0}
-        speed={1}
       />
       <OrbitControls 
         enableZoom={true}
