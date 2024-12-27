@@ -4,9 +4,9 @@ import { Suspense } from "react";
 
 const Planet = () => {
   return (
-    <mesh>
+    <mesh position={[0, 0, 0]}>
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color="green" />
+      <meshPhongMaterial color={0x00ff00} />
     </mesh>
   );
 };
@@ -23,10 +23,10 @@ const BiosphereSimulator = () => {
         }}
       >
         <Suspense fallback={null}>
-          <ambientLight />
-          <pointLight position={[10, 10, 10]} />
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} intensity={1.0} />
           <Planet />
-          <OrbitControls />
+          <OrbitControls enableZoom={true} enablePan={true} enableRotate={true} />
         </Suspense>
       </Canvas>
     </div>
