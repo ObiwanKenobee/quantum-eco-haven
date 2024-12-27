@@ -13,9 +13,9 @@ const Planet = () => {
   }, []);
 
   return (
-    <mesh ref={meshRef}>
-      <sphereGeometry args={[1, 64, 64]} />
-      <meshStandardMaterial color="#4444aa" />
+    <mesh ref={meshRef} position={[0, 0, 0]}>
+      <sphereGeometry args={[1, 32, 32]} />
+      <meshPhongMaterial color={new THREE.Color("#4444aa")} />
     </mesh>
   );
 };
@@ -41,6 +41,7 @@ const Scene = () => {
         count={5000} 
         factor={4} 
         fade
+        saturation={0}
       />
       <OrbitControls 
         enableZoom={true}
@@ -91,7 +92,8 @@ const BiosphereSimulator = () => {
           style={{ background: 'rgb(2,0,36)' }}
           gl={{ 
             antialias: true,
-            alpha: false
+            alpha: false,
+            powerPreference: "high-performance"
           }}
         >
           <Suspense fallback={<LoadingFallback />}>
