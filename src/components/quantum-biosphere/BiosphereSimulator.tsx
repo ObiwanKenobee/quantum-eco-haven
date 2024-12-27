@@ -1,15 +1,14 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import { Suspense } from "react";
-import * as THREE from "three";
 
 const Planet = () => {
   return (
     <mesh>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial 
-        color={0x4CAF50}
-        wireframe={true}
+        color="#4CAF50"
+        wireframe
       />
     </mesh>
   );
@@ -27,16 +26,11 @@ const BiosphereSimulator = () => {
         }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.5} />
+          <ambientLight />
           <pointLight position={[10, 10, 10]} />
           <Planet />
-          <Stars 
-            radius={100}
-            depth={50}
-            count={5000}
-            factor={4}
-          />
-          <OrbitControls />
+          <Stars />
+          <OrbitControls makeDefault />
         </Suspense>
       </Canvas>
     </div>
