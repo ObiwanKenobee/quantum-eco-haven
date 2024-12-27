@@ -9,7 +9,7 @@ const Planet = () => {
     <mesh>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial 
-        color={new THREE.Color("#4444aa").getHex()} 
+        color="#4444aa"
         roughness={0.7}
         metalness={0.3}
       />
@@ -28,7 +28,7 @@ const Scene = () => {
         depth={50} 
         count={5000} 
         factor={4} 
-        fade 
+        fade={true}
         speed={1}
       />
       <OrbitControls 
