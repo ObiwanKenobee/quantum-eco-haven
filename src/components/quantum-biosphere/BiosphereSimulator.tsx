@@ -21,12 +21,9 @@ const Planet = () => {
     >
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial 
-        color={new THREE.Color("#4444aa")}
+        color={0x4444aa}
         roughness={0.7}
         metalness={0.3}
-        transparent={false}
-        opacity={1}
-        side={THREE.FrontSide}
       />
     </mesh>
   );
@@ -34,13 +31,6 @@ const Planet = () => {
 
 const Scene = () => {
   console.log("Rendering Scene component");
-
-  useEffect(() => {
-    console.log("Scene component mounted");
-    return () => {
-      console.log("Scene component unmounted");
-    };
-  }, []);
 
   return (
     <>
@@ -53,8 +43,6 @@ const Scene = () => {
         count={5000} 
         factor={4} 
         saturation={0}
-        fade
-        speed={1}
       />
       <OrbitControls 
         enableZoom={true}
@@ -62,7 +50,6 @@ const Scene = () => {
         enableRotate={true}
         minDistance={2}
         maxDistance={7}
-        makeDefault
       />
     </>
   );
@@ -85,38 +72,23 @@ const ErrorFallback = ({ error }: { error: Error }) => {
 
 const BiosphereSimulator = () => {
   console.log("Rendering BiosphereSimulator");
-  
-  useEffect(() => {
-    console.log("BiosphereSimulator mounted");
-    return () => {
-      console.log("BiosphereSimulator unmounted - cleaning up");
-    };
-  }, []);
 
   return (
     <div className="w-full h-[400px] rounded-lg overflow-hidden">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <Canvas
-          shadows
           camera={{ 
             position: [0, 0, 4],
             fov: 45,
             near: 0.1,
-            far: 1000,
-            up: [0, 1, 0]
+            far: 1000
           }}
           gl={{ 
             antialias: true,
             alpha: false,
-            powerPreference: "high-performance",
-            precision: "highp",
-            stencil: false,
-            depth: true,
-            logarithmicDepthBuffer: true
+            powerPreference: "high-performance"
           }}
           dpr={[1, 2]}
-          legacy={false}
-          flat
         >
           <Suspense fallback={<LoadingFallback />}>
             <Scene />
