@@ -5,7 +5,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 const Planet = () => {
   return (
-    <mesh position={[0, 0, 0]}>
+    <mesh>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial 
         color="#4444aa"
