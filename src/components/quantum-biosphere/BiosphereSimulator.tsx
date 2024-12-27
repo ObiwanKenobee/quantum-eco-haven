@@ -15,11 +15,7 @@ const Planet = () => {
   return (
     <mesh ref={meshRef}>
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial 
-        color={new THREE.Color("#4444aa")}
-        roughness={0.7}
-        metalness={0.3}
-      />
+      <meshBasicMaterial color="#4444aa" />
     </mesh>
   );
 };
@@ -94,11 +90,10 @@ const BiosphereSimulator = () => {
           style={{ background: 'rgb(2,0,36)' }}
           gl={{ 
             antialias: true,
-            alpha: false,
-            preserveDrawingBuffer: true
+            alpha: false
           }}
         >
-          <Suspense fallback={null}>
+          <Suspense fallback={<LoadingFallback />}>
             <Scene />
           </Suspense>
         </Canvas>
