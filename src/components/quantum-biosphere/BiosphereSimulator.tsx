@@ -27,7 +27,7 @@ const Scene = () => {
         depth={50} 
         count={5000} 
         factor={4} 
-        fade={true}
+        fade
         speed={1}
       />
       <OrbitControls 
