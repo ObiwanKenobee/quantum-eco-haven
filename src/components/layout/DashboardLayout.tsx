@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useToast } from "@/components/ui/use-toast";
-import { Globe, Dna, Database, Shield, ChartBar, Users, Tree, Rocket } from "lucide-react";
+import { Globe, Dna, Database, Shield, ChartBar, Users, Trees, Rocket } from "lucide-react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -14,7 +14,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     { title: "Conservation Hub", icon: Shield },
     { title: "Analytics", icon: ChartBar },
     { title: "Community", icon: Users },
-    { title: "Resources", icon: Tree },
+    { title: "Resources", icon: Trees },
     { title: "Missions", icon: Rocket },
   ];
 
