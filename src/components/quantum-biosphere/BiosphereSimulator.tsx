@@ -2,7 +2,6 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import * as THREE from "three";
 
 const Planet = () => {
   return (
@@ -65,11 +64,6 @@ const BiosphereSimulator = () => {
             fov: 75,
             near: 0.1,
             far: 1000
-          }}
-          gl={{
-            antialias: true,
-            toneMapping: THREE.ACESFilmicToneMapping,
-            outputColorSpace: THREE.SRGBColorSpace
           }}
         >
           <Suspense fallback={<LoadingFallback />}>
