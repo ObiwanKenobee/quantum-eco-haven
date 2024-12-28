@@ -5,7 +5,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 const Planet = () => {
   return (
-    <mesh>
+    <mesh position={[0, 0, 0]}>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial 
         color="#4444aa"
@@ -51,13 +51,8 @@ const BiosphereSimulator = () => {
     <div className="w-full h-[400px] rounded-lg overflow-hidden">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <Canvas
-          camera={{
-            position: [0, 0, 5],
-            fov: 75,
-            near: 0.1,
-            far: 1000
-          }}
-          gl={{ antialias: true }}
+          camera={{ position: [0, 0, 5], fov: 75 }}
+          style={{ background: '#000' }}
         >
           <Suspense fallback={<LoadingFallback />}>
             <Scene />
