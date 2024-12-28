@@ -2,14 +2,16 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useToast } from "@/components/ui/use-toast";
 import { Globe, Dna, Database, Shield, ChartBar, Users, Trees, Rocket } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const navItems = [
-    { title: "Quantum Biosphere", icon: Globe },
-    { title: "Evolution Explorer", icon: Dna },
+    { title: "Quantum Biosphere", icon: Globe, path: "/dashboard/quantum-biosphere" },
+    { title: "Evolution Explorer", icon: Dna, path: "/dashboard/evolution-explorer" },
     { title: "Ecosystem Ledger", icon: Database },
     { title: "Conservation Hub", icon: Shield },
     { title: "Analytics", icon: ChartBar },
@@ -17,6 +19,17 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     { title: "Resources", icon: Trees },
     { title: "Missions", icon: Rocket },
   ];
+
+  const handleNavigation = (item: typeof navItems[0]) => {
+    if (item.path) {
+      navigate(item.path);
+    } else {
+      toast({
+        title: "Coming Soon",
+        description: `${item.title} module is under development`,
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground flex">
@@ -32,12 +45,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
               <button
                 key={item.title}
                 className="w-full text-left p-2 rounded hover:bg-sidebar-accent transition-colors flex items-center gap-2"
-                onClick={() => {
-                  toast({
-                    title: "Coming Soon",
-                    description: `${item.title} module is under development`,
-                  });
-                }}
+                onClick={() => handleNavigation(item)}
               >
                 <item.icon className="w-5 h-5" />
                 <span>{item.title}</span>

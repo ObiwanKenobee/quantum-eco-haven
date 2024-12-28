@@ -1,10 +1,10 @@
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import EvolutionExplorer from "@/components/evolution-explorer/EvolutionExplorer";
+import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
   return (
     <DashboardLayout>
-      <EvolutionExplorer />
+      <Outlet />
     </DashboardLayout>
   );
 };
