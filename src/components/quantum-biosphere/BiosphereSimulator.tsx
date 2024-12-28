@@ -6,12 +6,14 @@ import { ErrorBoundary } from "react-error-boundary";
 const Planet = () => {
   console.log("Rendering Planet component");
   return (
-    <mesh>
+    <mesh visible position={[0, 0, 0]} rotation={[0, 0, 0]} scale={[1, 1, 1]}>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial 
         color="#4444aa"
         roughness={0.7}
         metalness={0.3}
+        transparent={false}
+        opacity={1}
       />
     </mesh>
   );
@@ -22,12 +24,13 @@ const Scene = () => {
   return (
     <>
       <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
+      <pointLight position={[10, 10, 10]} intensity={1.0} />
       <Planet />
       <OrbitControls 
         enableZoom={true}
         minDistance={2}
         maxDistance={10}
+        enablePan={false}
       />
     </>
   );
@@ -60,8 +63,11 @@ const BiosphereSimulator = () => {
             near: 0.1,
             far: 1000
           }}
+          gl={{ antialias: true }}
         >
-          <Scene />
+          <Suspense fallback={null}>
+            <Scene />
+          </Suspense>
         </Canvas>
       </ErrorBoundary>
     </div>
