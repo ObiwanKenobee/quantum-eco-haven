@@ -4,8 +4,9 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 const Planet = () => {
+  console.log("Rendering Planet component"); // Debug log
   return (
-    <mesh>
+    <mesh position={[0, 0, 0]}>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial 
         color="#4444aa"
@@ -17,6 +18,7 @@ const Planet = () => {
 };
 
 const Scene = () => {
+  console.log("Rendering Scene component"); // Debug log
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -38,7 +40,7 @@ const LoadingFallback = () => (
 );
 
 const ErrorFallback = ({ error }: { error: Error }) => {
-  console.error("BiosphereSimulator error:", error);
+  console.error("BiosphereSimulator error:", error); // Debug log
   return (
     <div className="w-full h-full flex items-center justify-center bg-red-50 text-red-500 p-4">
       <p>Error loading 3D scene. Please refresh the page.</p>
@@ -47,10 +49,17 @@ const ErrorFallback = ({ error }: { error: Error }) => {
 };
 
 const BiosphereSimulator = () => {
+  console.log("Rendering BiosphereSimulator component"); // Debug log
   return (
     <div className="w-full h-[400px] rounded-lg overflow-hidden">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <Canvas>
+        <Canvas
+          camera={{ 
+            position: [0, 0, 5], 
+            fov: 75 
+          }}
+        >
+          <color attach="background" args={['#000000']} />
           <Suspense fallback={<LoadingFallback />}>
             <Scene />
           </Suspense>
