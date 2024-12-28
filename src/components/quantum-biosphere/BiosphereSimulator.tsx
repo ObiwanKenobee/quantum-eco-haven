@@ -1,11 +1,11 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stars } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 const Planet = () => {
   return (
-    <mesh position={[0, 0, 0]}>
+    <mesh>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial 
         color="#4444aa"
@@ -22,14 +22,6 @@ const Scene = () => {
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} intensity={1.0} />
       <Planet />
-      <Stars 
-        radius={100} 
-        depth={50} 
-        count={5000} 
-        factor={4} 
-        saturation={0}
-        fade={true}
-      />
       <OrbitControls 
         enableZoom={true}
         minDistance={2}
@@ -65,6 +57,7 @@ const BiosphereSimulator = () => {
             near: 0.1,
             far: 1000
           }}
+          gl={{ antialias: true }}
         >
           <Suspense fallback={<LoadingFallback />}>
             <Scene />
