@@ -1,12 +1,15 @@
+
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { useRef } from "react";
+import * as THREE from "three";
 
 const Planet = () => {
-  console.log("Rendering Planet component");
+  const meshRef = useRef<THREE.Mesh>(null);
+  
   return (
-    <mesh>
+    <mesh ref={meshRef} position={[0, 0, 0]}>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial 
         color="#4444aa"
@@ -18,11 +21,10 @@ const Planet = () => {
 };
 
 const Scene = () => {
-  console.log("Rendering Scene component");
   return (
     <>
       <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
+      <directionalLight position={[10, 10, 10]} intensity={1.0} />
       <Planet />
       <OrbitControls 
         enableZoom={true}
@@ -49,7 +51,6 @@ const ErrorFallback = ({ error }: { error: Error }) => {
 };
 
 const BiosphereSimulator = () => {
-  console.log("Rendering BiosphereSimulator component");
   return (
     <div className="w-full h-[400px] rounded-lg overflow-hidden">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -60,6 +61,7 @@ const BiosphereSimulator = () => {
             near: 0.1,
             far: 1000
           }}
+          dpr={[1, 2]}
         >
           <Scene />
         </Canvas>
